@@ -172,6 +172,7 @@ function doRun() {
   }
   const results = [];
   let lineNumber = 0;
+  let skip = 0;
 
   for (let i of inputValueLines) {
     lineNumber += 1;
@@ -179,12 +180,15 @@ function doRun() {
       const result = func(i, lineNumber, totalLineNumber);
       if (result !== undefined) {
         results.push(result);
+      } else {
+        skip += 1;
       }
     } catch (e) {
       addLog(e);
       return;
     }
   }
-  addLog(`データ更新。inputは ${inputValueLines.length} 行。outputは ${results.length} 行`);
+  const resultJoined = results.join("\n");
+  addLog(`データ更新。inputは ${inputValueLines.length} 行。outputは ${resultJoined.split("\n").length} 行、 ${results.length} 件。undefinedでスキップが ${skip} 回。`);
   output.value = results.join("\n");
 }
