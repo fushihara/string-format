@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="./index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.js"></script>
+<script src="https://codemirror.net/mode/javascript/javascript.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.css">
+<style>
+  * {
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    height: 100vh;
+    overflow-y: hidden;
+  }
+
+  .gutter {
+    background-color: #eee;
+
+    background-repeat: no-repeat;
+    background-position: 50%;
+  }
+
+  .gutter.gutter-horizontal {
+    cursor: col-resize;
+  }
+
+  .gutter.gutter-vertical {
+    cursor: row-resize;
+  }
+
+  .gutter.gutter-vertical {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+  }
+
+  .gutter.gutter-horizontal {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+  }
+
+  .CodeMirror {
+    height: 100%;
+    width: 100%;
+  }
+
+  .log>div:nth-child(odd) {
+    background: silver;
+  }
+
+  .log>div:nth-child(even) {
+    background: lightgray;
+  }
+</style>
+<script src="https://unpkg.com/split.js/dist/split.min.js"></script>
+
+<body style="display: flex;flex-direction: row;">
+  <div id="one" style="display:flex;flex-direction: column;">
+    <div style="display:flex;flex-direction:row;">
+      引数は lineText と lineNumber と totalLineNumber。戻り値がundefinedの場合は行削除
+      <label><input type="checkbox" id="wrap-source">改行する</label>
+    </div>
+    <textarea style="width:100%;height:100%;" id="source"></textarea>
+  </div>
+  <div id="two" style="display: flex;flex-direction: column;">
+    <div id="a1" style="display: flex;flex-direction: column">
+      <div style="display:flex;flex-direction:row;">
+        <span style="flex:1 1 0;">input</span>
+        <label><input type="checkbox" id="wrap-input">改行する</label>
+      </div>
+      <textarea style="width:100%;height:100%;" id="input"></textarea>
+    </div>
+    <div id="a2" style="display: flex;flex-direction: column">
+      <div style="display:flex;flex-direction:row;">
+        <span style="flex:1 1 0;">output</span>
+        <label><input type="checkbox" id="wrap-output">改行する</label>
+        <label><input type="checkbox" id="auto-run">自動実行</label>
+        <button id="run">実行</button>
+        <button id="copy">コピー</button>
+      </div>
+      <textarea style="width:100%;height:100%;" id="output" readonly></textarea>
+    </div>
+    <div id="a3" style="display: flex;flex-direction: column">
+      <div style="display:flex;flex-direction:row;">
+        <span style="flex:1 1 0;">log</span>
+        <label><input type="checkbox" id="auto-scroll" checked>自動スクロール</label>
+      </div>
+      <div style="overflow-y:scroll;flex:1 1 0;border:solid 1px silver;font-size:x-small;" id="log" class="log"></div>
+    </div>
+  </div>
+</body>
